@@ -38,7 +38,7 @@ const Signup = () => {
         body: JSON.stringify(signupInfo),
       });
       const res = await response.json();
-      const { success, message } = res;
+      const { success, message,error} = res;
       if (success) {
         successToast(message);
         // setSignupInfo({
@@ -50,12 +50,15 @@ const Signup = () => {
           navigate("/login");
         }, 3000);
         // return successToast(message)
-      } else {
+      } else if(error){
+        const details = error?.details[0]?.message;
+        errorToast(details);
+      } else if (!success) {
         errorToast(message);
       }
       // console.log(res)
     } catch (error) {
-      errorToast("Something went wrong");
+      errorToast(error);
     }
   };
   return (
@@ -104,7 +107,7 @@ const Signup = () => {
         </div>
         <div>
           <p>
-            Don't have an account? <a href="/login">Login</a>
+            Already have an account? <a href="/login">Login</a>
           </p>
         </div>
       </form>
