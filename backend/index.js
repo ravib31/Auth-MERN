@@ -17,7 +17,10 @@ app.get("/ravi",(req,res)=>{
 })
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({ origin: '*' }));
+app.use(cors({
+  origin: 'http://localhost:3001'
+}));
 app.use("/auth",AuthRouter)
 app.use("/products",ProductRouter)
 
